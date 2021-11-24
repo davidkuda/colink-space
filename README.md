@@ -1,6 +1,12 @@
 # CoLinkSpace
 
-A short summary of the project
+CoLink.Space has three main features:
+
+1. Store links
+2. Find and retrieve links
+3. Share links with your family and friends
+
+![CoLinkSpace Logo](https://github.com/davidkuda/media/blob/main/images/CoLinkSpace/coLinkspace-logos.jpeg?raw=true)
 
 ## Getting Started
 
