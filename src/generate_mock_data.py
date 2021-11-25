@@ -60,7 +60,6 @@ def get_random_user_id():
     return id
 
 
-
 def get_random_hn_link():
     """Get a random link from the hackernews links csv."""
     hn_links = read_lines_of_file(PATH_HN_LINKS_CSV)
