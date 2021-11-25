@@ -10,9 +10,37 @@ PATH_USERS_CSV = "data/users.csv"
 
 
 def main():
-    # TODO: Implement generate_users()
+    generate_users()
     create_hacker_news_links_csv_file()
     write_app_data_files()
+
+
+def generate_users(number: int = 10) -> None:
+    """Generates :arg:number random user data and writes to csv."""
+    first_names = read_lines_of_file('../data/first_names.txt')
+    last_names = read_lines_of_file('../data/last_names.txt')
+    countries = ['Switzerland', 'Germany', 'Austria', 'Spain', 'Sweden', 'Denmark']
+    interests = ['programming', 'writing', 'tech', 'guitar', 'reading',
+                'meditation', 'sports', 'traveling']
+    professions = ['Data Engineer', 'Engineering Manager', 'Software Engineer',
+                'Site Reliability Engineer', 'Fullstack Developer',
+                'Data Scientist', 'Frontend Engineer']
+    email_providers = ['protonmail.com', 'pm.me', 'gmail.com', 'bluewin.ch', 'posteo.ch']
+
+    with open(PATH_USERS_CSV, 'w') as file:
+        header = 'id,name,email,country,profession,interests\n'
+        file.write(header)
+        
+        for i in range(number):
+            first_name = random.choice(first_names)
+            last_name = random.choice(last_names)
+            name = f'{first_name} {last_name}'
+            email = f'{first_name.lower()}.{last_name.lower()}@{random.choice(email_providers)}'
+            
+            line = f'{i},{name},{email},{random.choice(countries)},' \
+                        f'{random.choice(professions)},{random.choice(interests)}\n'
+
+            file.write(line)
 
 
 def create_hacker_news_links_csv_file(days: int = 20):
@@ -82,4 +110,4 @@ def read_lines_of_file(path: str):
 
 
 if __name__ == "__main__":
-    write_app_data_files(10)
+    main()
