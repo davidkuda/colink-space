@@ -26,27 +26,23 @@ class HackerNewsScraper:
                     "date": date
                 }
         """
-        today = datetime.date.today()
-        one_day = datetime.timedelta(1)
-        yesterday = today - one_day
-
         for day in reversed(range(days)):
+            today = datetime.date.today()
             delta = datetime.timedelta(day)
             date = today - delta
             hacker_news_page = HackerNewsScraper(date)
-            links = hacker_news_page.scrape_links()
-            yield from links
+            yield from hacker_news_page.links
 
 
     def __init__(self, date: str = None):
         if date is None:
             date = datetime.date.today().__str__
         self.page_url = f"https://news.ycombinator.com/front?day={date}"
-        self.links = self.scrape_links()
+        self.links = self._scrape_links()
         self._page_content = requests.get(self.page_url).content
         self._soup = BeautifulSoup(self._page_content, "html.parser")
  
-    def scrape_links(self):
+    def _scrape_links(self):
         things = self._get_things()
         scores = self._get_scores()
         
