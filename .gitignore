@@ -69,4 +69,6 @@ venv*/
 # exclude data from source control (but keep the folder)
 data/*
 !data/.gitkeep
+!data/first_names.txt
+!data/last_names.txt
 .DS_STORE
