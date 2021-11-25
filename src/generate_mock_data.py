@@ -11,8 +11,8 @@ PATH_USERS_CSV = "data/users.csv"
 
 def main():
     generate_users()
-    create_hacker_news_links_csv_file()
-    write_app_data_files()
+    # create_hacker_news_links_csv_file()
+    # write_app_data_files(100)
 
 
 def generate_users(number: int = 10) -> None:
@@ -32,13 +32,21 @@ def generate_users(number: int = 10) -> None:
         file.write(header)
         
         for i in range(number):
-            first_name = random.choice(first_names)
-            last_name = random.choice(last_names)
-            name = f'{first_name} {last_name}'
+            first_name = random.choice(first_names).strip()
+            last_name = random.choice(last_names).strip()
+            name = f'{first_name} {last_name}'.strip()
             email = f'{first_name.lower()}.{last_name.lower()}@{random.choice(email_providers)}'
+
+            data = [
+                str(i),
+                name,
+                email,
+                random.choice(countries),
+                random.choice(professions),
+                random.choice(interests)
+            ]
             
-            line = f'{i},{name},{email},{random.choice(countries)},' \
-                        f'{random.choice(professions)},{random.choice(interests)}\n'
+            line = ",".join(data) + "\n"
 
             file.write(line)
 
