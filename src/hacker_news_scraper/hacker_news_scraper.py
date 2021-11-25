@@ -37,15 +37,14 @@ class HackerNewsScraper:
             links = hacker_news_page.scrape_links()
             yield from links
 
-        
-    
+
     def __init__(self, date: str = None):
         if date is None:
             date = datetime.date.today().__str__
         self.page_url = f"https://news.ycombinator.com/front?day={date}"
         self.page_content = requests.get(self.page_url).content
         self.soup = BeautifulSoup(self.page_content, "html.parser")
-        
+ 
     def scrape_links(self):
         things = self._get_things()
         scores = self._get_scores()
