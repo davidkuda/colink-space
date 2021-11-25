@@ -17,7 +17,7 @@ def main():
 
 def create_hacker_news_links(days: int = 20):
     """Parse hacker news and write links to a csv file."""
-    links = HackerNewsScraper.main(20)
+    links = HackerNewsScraper.main(days)
         
     path = PATH_HN_LINKS_CSV
     with open(path, "w") as file:
