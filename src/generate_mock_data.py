@@ -11,19 +11,17 @@ PATH_USERS_CSV = "data/users.csv"
 
 def main():
     # TODO: Implement generate_users()
-    create_hacker_news_links()
+    create_hacker_news_links_csv_file()
     write_app_data_files()
 
 
-def create_hacker_news_links(days: int = 20):
+def create_hacker_news_links_csv_file(days: int = 20):
     """Parse hacker news and write links to a csv file."""
     links = HackerNewsScraper.main(days)
-        
     path = PATH_HN_LINKS_CSV
     with open(path, "w") as file:
         header = "date,link,title,score\n"
         file.write(header)
-
         for data in links:
             date = data["date"]
             link = data["link"]
