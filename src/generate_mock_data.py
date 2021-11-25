@@ -17,8 +17,8 @@ def main():
 
 def generate_users(number: int = 10) -> None:
     """Generates :arg:number random user data and writes to csv."""
-    first_names = read_lines_of_file('../data/first_names.txt')
-    last_names = read_lines_of_file('../data/last_names.txt')
+    first_names = read_lines_of_file('data/first_names.txt')
+    last_names = read_lines_of_file('data/last_names.txt')
     countries = ['Switzerland', 'Germany', 'Austria', 'Spain', 'Sweden', 'Denmark']
     interests = ['programming', 'writing', 'tech', 'guitar', 'reading',
                 'meditation', 'sports', 'traveling']
