@@ -9,7 +9,13 @@ PATH_HN_LINKS_CSV = "data/hacker_news_links.csv"
 PATH_USERS_CSV = "data/users.csv"
 
 
-def create_hacker_news_links():
+def main():
+    # TODO: Implement generate_users()
+    create_hacker_news_links()
+    write_app_data_files()
+
+
+def create_hacker_news_links(days: int = 20):
     """Parse hacker news and write links to a csv file."""
     links = HackerNewsScraper.main(20)
         
