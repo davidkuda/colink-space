@@ -75,6 +75,7 @@ def get_random_hn_link():
 
 
 def read_lines_of_file(path: str):
+    """Opens a file and returns all lines as list."""
     with open(path, "r") as file:
         lines = file.readlines()
     return lines
