@@ -16,7 +16,7 @@ def main():
 
 
 def generate_users(number: int = 10) -> None:
-    """Generates :arg:number random user data and writes to csv."""
+    """Generates :arg:number random user data and writes to "data/users.csv"."""
     first_names = read_lines_of_file('data/first_names.txt')
     last_names = read_lines_of_file('data/last_names.txt')
     countries = ['Switzerland', 'Germany', 'Austria', 'Spain', 'Sweden', 'Denmark']
@@ -52,7 +52,7 @@ def generate_users(number: int = 10) -> None:
 
 
 def create_hacker_news_links_csv_file(days: int = 20):
-    """Parse hacker news and write links to a csv file."""
+    """Parse hacker news and write links to a "data/hacker_news_links.csv"."""
     links = HackerNewsScraper.main(days)
     path = PATH_HN_LINKS_CSV
     with open(path, "w") as file:
@@ -68,7 +68,13 @@ def create_hacker_news_links_csv_file(days: int = 20):
 
 
 def write_app_data_files(iterations: int) -> None:
-    """Writes sample app data (json like dict) to a json file."""
+    """Writes sample app data (json like dict) to "data/app_links/{filename}.json".
+    
+    100 files are 0.4mb in size. 1'000'000 files are 400 mb in size.
+    
+    Args:
+        iterations (int): Define how many files that should be created.
+    """
     for iteration in range(iterations):
         data = create_app_links_data()
         data.update({"id": str(iteration)})

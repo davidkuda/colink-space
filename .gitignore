@@ -71,4 +71,5 @@ data/*
 !data/.gitkeep
 !data/first_names.txt
 !data/last_names.txt
+!data/app_links/.gitkeep
 .DS_STORE
