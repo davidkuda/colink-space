@@ -42,8 +42,8 @@ class HackerNewsScraper:
         if date is None:
             date = datetime.date.today().__str__
         self.page_url = f"https://news.ycombinator.com/front?day={date}"
-        self.page_content = requests.get(self.page_url).content
-        self.soup = BeautifulSoup(self.page_content, "html.parser")
+        self._page_content = requests.get(self.page_url).content
+        self._soup = BeautifulSoup(self._page_content, "html.parser")
  
     def scrape_links(self):
         things = self._get_things()
@@ -74,17 +74,17 @@ class HackerNewsScraper:
 
     def _get_date(self) -> str:
         """The date is the first word in the title."""
-        date: str = self.soup.title.string.split()[0]
+        date: str = self._soup.title.string.split()[0]
         return date
      
     def _get_things(self):
         """A link on HN is stored in an element with the class "athing"."""
-        things = self.soup.find_all(class_="athing")
+        things = self._soup.find_all(class_="athing")
         return things
         
     def _get_scores(self):
         """The score of a link is stored in an element with the class "score"."""
-        scores = self.soup.find_all(class_="score")
+        scores = self._soup.find_all(class_="score")
         return scores
 
 
