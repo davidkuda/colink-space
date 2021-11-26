@@ -1,4 +1,5 @@
-![CoLinkSpace Logo](https://github.com/davidkuda/media/blob/main/images/CoLinkSpace/coLinkspace-logos.jpeg?raw=true)
+![CoLinkSpace Logo](https://github.com/davidkuda/media/blob/main/CoLinkSpace/logo/coLinkspace-logos.jpeg?raw=true)
+
 # CoLinkSpace
 
 CoLink.Space has three main features:
@@ -6,6 +7,21 @@ CoLink.Space has three main features:
 1. Store links
 2. Find and retrieve links
 3. Share links with your family and friends
+
+This repository is a POC / Proof of Concept of the underlying data model. I run two tests with this repository:
+
+1. Test the data model with an upload of 1'000'000 records. The data will be generated randomly from sample data.
+2. Get all posts listed under a space (after the upload)
+
+## The data Model
+
+Once a user signs up he has a basic space. A user can add posts to that space. A post contains a link, a description, tags and mentions (similar to a tweet on Twitter). A user can create multiple spaces. For example, he could use one space for himself, create a separate space to share links with his colleagues and another one to share parenting stuff with his wife.
+
+![CoLinkSpace Data Model](https://github.com/davidkuda/media/blob/main/CoLinkSpace/data-models/colinkspace_overview.png)
+
+## The Schema
+
+![CoLinkSpace Schema](https://github.com/davidkuda/media/blob/main/CoLinkSpace/schemas/colinkspace-schema.drawio.png)
 
 ## Getting Started
 
