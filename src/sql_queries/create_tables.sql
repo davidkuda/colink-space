@@ -7,9 +7,16 @@ CREATE TABLE IF NOT EXISTS users {
     interests varchar(256)
 };
 
+
 CREATE TABLE IF NOT EXISTS spaces {
     space_id serial NOT NULL PRIMARY KEY,
-    owner_user_id integer REFERENCES(users.user_id)
+    space_name varchar(256),
+    creation_date date NOT NULL
+};
+
+CREATE TABLE IF NOT EXISTS space_owners {
+    space_id serial NOT NULL PRIMARY KEY,
+    user_id integer REFERENCES(users.user_id)
 };
 
 CREATE TABLE IF NOT EXISTS space_contributors {
@@ -29,5 +36,6 @@ CREATE TABLE IF NOT EXISTS posts {
     post_id serial NOT NULL PRIMARY KEY,
     link_id integer NOT NULL REFERENCES(links.link_id),
     space_id integer NOT NULL REFERENCES(spaces.space_id),
-    description varchar(512)
+    description varchar(512),
+    date date
 };
