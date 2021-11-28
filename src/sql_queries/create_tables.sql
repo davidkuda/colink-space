@@ -25,8 +25,7 @@ CREATE TABLE IF NOT EXISTS space_contributors {
 };
 
 CREATE TABLE IF NOT EXISTS links {
-    link_id serial NOT NULL PRIMARY KEY,
-    url varchar(256),
+    url varchar(512) NOT NULL PRIMARY KEY,
     meta_title varchar(256),
     meta_description varchar(256),
     thumbnail_url varchar(256)
@@ -34,7 +33,7 @@ CREATE TABLE IF NOT EXISTS links {
 
 CREATE TABLE IF NOT EXISTS posts {
     post_id serial NOT NULL PRIMARY KEY,
-    link_id integer NOT NULL REFERENCES(links.link_id),
+    url varchar(512) REFERENCES(links.url),
     space_id integer NOT NULL REFERENCES(spaces.space_id),
     description varchar(512),
     date date
