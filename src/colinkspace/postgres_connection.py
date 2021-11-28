@@ -21,9 +21,9 @@ class PostgresConnection:
         )
         return conn
 
-    def execute_sql(self, query: str):
+    def execute_sql(self, query: str, data: list):
         cur = self.conn.cursor()
-        cur.execute(query)
+        cur.execute(query, data)
         self.conn.commit()
         cur.close()
 
