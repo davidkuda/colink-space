@@ -1,10 +1,37 @@
 CREATE TABLE IF NOT EXISTS users {
-    userId serial NOT NULL,
+    user_id serial NOT NULL,
     name varchar(256),
     email varchar(256),
-    country varchar(256),
-    profession varchar(256),
-    interests varchar(256)
+};
+
+CREATE TABLE IF NOT EXISTS countries {
+    country_id serial NOT NULL PRIMARY KEY,
+    country varchar(256) NOT NULL
+};
+
+CREATE TABLE IF NOT EXISTS users_countries_map {
+    country_id integer NOT NULL REFERENCES(countries.country_id),
+    user_id integer NOT NULL REFERENCES(users.user_id)
+};
+
+CREATE TABLE IF NOT EXISTS professions {
+    profession_id serial PRIMARY KEY,
+    profession varchar(256)
+};
+
+CREATE TABLE IF NOT EXISTS users_professions_map {
+    user_id integer NOT NULL REFERENCES(users.user_id),
+    profession_id integer NOT NULL REFERENCES(professions.profession_id)
+};
+
+CREATE TABLE IF NOT EXISTS interests {
+    interest_id serial NOT NULL PRIMARY KEY,
+    interest varchar(256) NOT NULL
+};
+
+CREATE TABLE IF NOT EXISTS users_interests_map {
+    user_id integer NOT NULL REFERENCES(users.user_id),
+    interest_id integer NOT NULL REFERENCES(interests.interest_id)
 };
 
 
@@ -25,7 +52,8 @@ CREATE TABLE IF NOT EXISTS space_contributors {
 };
 
 CREATE TABLE IF NOT EXISTS links {
-    url varchar(512) NOT NULL PRIMARY KEY,
+    url_id serial NOT NULL PRIMARY KEY,
+    url varchar(512) NOT NULL,
     meta_title varchar(256),
     meta_description varchar(256),
     thumbnail_url varchar(256)
@@ -33,7 +61,7 @@ CREATE TABLE IF NOT EXISTS links {
 
 CREATE TABLE IF NOT EXISTS posts {
     post_id serial NOT NULL PRIMARY KEY,
-    url varchar(512) REFERENCES(links.url),
+    url_id integer REFERENCES(links.url),
     space_id integer NOT NULL REFERENCES(spaces.space_id),
     description varchar(512),
     date date
