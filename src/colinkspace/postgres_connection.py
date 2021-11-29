@@ -1,6 +1,6 @@
 import psycopg2
 
-from src.utils.main import parse_config_file
+from src.utils.utils import parse_config_file
 
 
 class PostgresConnection:
@@ -27,5 +27,26 @@ class PostgresConnection:
         self.conn.commit()
         cur.close()
 
-    def process_frontend_input():
-        pass
+    def process_new_post_from_frontend(post_data: dict):
+        """Writes data from the frontend to the database.
+        
+        Expected input:
+        
+            {
+                "user_id": "625",
+                "space_id": "890",
+                "date": "2021-11-06",
+                "link": "https://blog.racket-lang.org/2021/11/racket-v8-3.html",
+                "description": "Racket v8.3"
+            }
+        
+        Write the data to two relational tables:
+            links:
+                Fetch meta data from link such as title and description 
+                and store in database
+            posts: Every user is generating a post
+        """
+        query = f"""
+        INSERT INTO posts
+        
+        """
