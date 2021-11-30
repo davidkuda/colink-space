@@ -10,12 +10,12 @@ PATH_USERS_CSV = "data/users.csv"
 
 
 def main():
-    generate_users()
+    generate_random_users()
     # create_hacker_news_links_csv_file()
     # write_app_data_files(100)
 
 
-def generate_users(number: int = 10) -> None:
+def generate_random_users(number: int = 10) -> None:
     """Generates :arg:number random user data and writes to "data/users.csv"."""
     first_names = read_lines_of_file('data/first_names.txt')
     last_names = read_lines_of_file('data/last_names.txt')
