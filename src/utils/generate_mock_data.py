@@ -22,7 +22,7 @@ def generate_random_users(number: int = 10) -> None:
     email_providers = ['protonmail.com', 'pm.me', 'gmail.com', 'bluewin.ch', 'gmx.ch']
 
     with open(PATH_USERS_CSV, 'w') as file:
-        header = 'id,name,email\n'
+        header = 'name,email\n'
         file.write(header)
         
         for i in range(number):
@@ -32,7 +32,6 @@ def generate_random_users(number: int = 10) -> None:
             email = f'{first_name.lower()}.{last_name.lower()}@{random.choice(email_providers)}'
 
             data = [
-                str(i),
                 name,
                 email
             ]
