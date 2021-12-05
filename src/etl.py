@@ -1,20 +1,31 @@
-from src.utils.generate_mock_data import (
-    generate_random_users, create_hacker_news_links_csv_file, write_app_data_files
-)
+from colinkspace.postgres_connection import PostgresConnection
+from colinkspace.backend import write_new_users
+from utils.generate_mock_data import generate_random_users
 
 def main():
-    create_hacker_news_links_csv_file()
-    generate_random_users(100)
-    # delete tables
-    # create tables
-    # insert into tables
-    # -- insert new user
-    # -- create a new default space for new user
-    # get a list of space_ids 
-    write_app_data_files(100)
+    pg = PostgresConnection()
+    generate_random_users(10)
+    pg.init_tables()
+    users = read_users_from_csv()
+    write_new_users(users)
+    
     # join and see which user has most shares
     # join and see which links was shared most
 
+
+def read_users_from_csv():
+    PATH_USERS_CSV = "data/users.csv"
+    users = []
+    with open(PATH_USERS_CSV, "r") as file:
+        headers = file.readline()
+        for line in file:
+            name, email = line.strip().split(",")
+            users.append({
+                "name": name,
+                "email": email
+            })
+    return users
+            
+
 if __name__ == "__main__":
-    # main()
-    pass
+    main()
