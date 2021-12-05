@@ -63,6 +63,7 @@ CREATE TABLE IF NOT EXISTS posts {
     post_id serial NOT NULL PRIMARY KEY,
     url_id integer REFERENCES(links.url),
     space_id integer NOT NULL REFERENCES(spaces.space_id),
+    user_id integer NOT NULL REFERENCES(users.user_id),
     description varchar(512),
     date date
 };
