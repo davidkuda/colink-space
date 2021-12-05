@@ -11,27 +11,24 @@ class HackerNewsScraper:
     RESULTS_PER_PAGE = 30
 
     @staticmethod
-    def main(days: int = 5):
-        """Yields top 30 Hacker News links for every day since today - days.
+    def main(date: datetime.date = None):
+        """Yields top 30 Hacker News links of the given date.
         
         Args:
-            days (int): How many days to go back.
+            date (datetime.date): Date to query HackerNews (format: "yyyy-mm-dd")
         
         Yields:
-            data (List[dict]):
-                data = {
-                    "link": link,
-                    "description": description,
-                    "score": score,
-                    "date": date
-                }
+            {
+                "link": link,
+                "description": description,
+                "score": score,
+                "date": date
+            }
         """
-        for day in reversed(range(days)):
-            today = datetime.date.today()
-            delta = datetime.timedelta(day)
-            date = today - delta
-            hacker_news_page = HackerNewsScraper(date)
-            yield from hacker_news_page.links
+        if date is None:
+            date = datetime.date.today()
+        hacker_news_page = HackerNewsScraper(date)
+        yield from hacker_news_page.links
 
 
     def __init__(self, date: str = None):
