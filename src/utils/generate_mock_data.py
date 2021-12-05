@@ -19,16 +19,10 @@ def generate_random_users(number: int = 10) -> None:
     """Generates :arg:number random user data and writes to "data/users.csv"."""
     first_names = read_lines_of_file('data/first_names.txt')
     last_names = read_lines_of_file('data/last_names.txt')
-    countries = ['Switzerland', 'Germany', 'Austria', 'Spain', 'Sweden', 'Denmark']
-    interests = ['programming', 'writing', 'tech', 'guitar', 'reading',
-                'meditation', 'sports', 'traveling']
-    professions = ['Data Engineer', 'Engineering Manager', 'Software Engineer',
-                'Site Reliability Engineer', 'Fullstack Developer',
-                'Data Scientist', 'Frontend Engineer']
-    email_providers = ['protonmail.com', 'pm.me', 'gmail.com', 'bluewin.ch', 'posteo.ch']
+    email_providers = ['protonmail.com', 'pm.me', 'gmail.com', 'bluewin.ch', 'gmx.ch']
 
     with open(PATH_USERS_CSV, 'w') as file:
-        header = 'id,name,email,country,profession,interests\n'
+        header = 'id,name,email\n'
         file.write(header)
         
         for i in range(number):
@@ -40,10 +34,7 @@ def generate_random_users(number: int = 10) -> None:
             data = [
                 str(i),
                 name,
-                email,
-                random.choice(countries),
-                random.choice(professions),
-                random.choice(interests)
+                email
             ]
             
             line = ",".join(data) + "\n"
