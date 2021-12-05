@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS links {
     url varchar(512) NOT NULL,
     meta_title varchar(256),
     meta_description varchar(256),
-    thumbnail_url varchar(256)
+    image_url varchar(256)
 };
 
 CREATE TABLE IF NOT EXISTS posts {
