@@ -27,6 +27,21 @@ class PostgresConnection:
         data = cur.fetchall()
         self.conn.commit()
         cur.close()
+        return data
+    
+    def init_tables(self):
+        self.delete_tables()
+        self.create_tables()
+
+    def delete_tables(self):
+        with self.conn.cursor() as cur:
+            cur.execute(open("src/sql_queries/drop_tables.sql", "r").read())
+        self.conn.commit()
+    
+    def create_tables(self):
+        with self.conn.cursor() as cur:
+            cur.execute(open("src/sql_queries/create_tables.sql", "r").read())
+        self.conn.commit()
 
     def process_new_post_from_frontend(post_data: dict):
         """Writes data from the frontend to the database.
