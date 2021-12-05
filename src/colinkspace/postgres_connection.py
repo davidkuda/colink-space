@@ -1,6 +1,6 @@
 import psycopg2
 
-from src.utils.utils import parse_config_file
+from utils.utils import parse_config_file
 
 
 class PostgresConnection:
@@ -21,9 +21,10 @@ class PostgresConnection:
         )
         return conn
 
-    def execute_sql(self, query: str, data: list):
+    def execute_sql(self, query: str):
         cur = self.conn.cursor()
-        cur.execute(query, data)
+        cur.execute(query)
+        data = cur.fetchall()
         self.conn.commit()
         cur.close()
 

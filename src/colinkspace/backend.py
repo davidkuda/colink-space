@@ -59,3 +59,8 @@ def write_new_users(data: List[dict]) -> None:
     
     cur.close()
     pg.conn.close()
+
+
+def write_new_post(data: dict):
+    """Write a post from a user to database."""
+    pass
