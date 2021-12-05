@@ -36,11 +36,11 @@ class HackerNewsScraper:
 
     def __init__(self, date: str = None):
         if date is None:
-            date = datetime.date.today().__str__
+            date = str(datetime.date.today())
         self.page_url = f"https://news.ycombinator.com/front?day={date}"
-        self.links = self._scrape_links()
         self._page_content = requests.get(self.page_url).content
         self._soup = BeautifulSoup(self._page_content, "html.parser")
+        self.links = self._scrape_links()
  
     def _scrape_links(self):
         things = self._get_things()
