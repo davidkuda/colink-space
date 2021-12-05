@@ -1,4 +1,5 @@
 from configparser import ConfigParser
+import uuid
 
 
 def parse_config_file(config_file_path: str = "config/dwh.cfg") -> dict:
@@ -14,6 +15,10 @@ def parse_config_file(config_file_path: str = "config/dwh.cfg") -> dict:
             section_config[section].update({k: v})
         configs.update(section_config)
     return configs
+
+
+def create_random_uuid() -> str:
+    return str(uuid.uuid4())
 
 
 if __name__ == "__main__":
