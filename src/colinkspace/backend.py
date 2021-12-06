@@ -62,5 +62,45 @@ def write_new_users(data: List[dict]) -> None:
 
 
 def write_new_post(data: dict):
-    """Write a post from a user to database."""
-    pass
+    """Write a post from a user to database.
+    
+    Args:
+        data (dict):
+            {
+                "link": "str",
+                "description": "str",
+                "date": "yyyy-mm-dd",
+                "space_id": "uuid",
+                "user_id": "uuid"
+            }
+    """
+    pg = postgres_connection.PostgresConnection()
+    cur = pg.conn.cursor()
+
+    # parse link
+    
+    # write link
+    
+    # Write post
+    post_uuid = create_random_uuid()
+
+    query = """
+    INSERT INTO posts (
+        post_id
+        url_id
+        space_id
+        user_id
+        description
+        date
+    )
+    VALUES ((%s), (%s), (%s), (%s), (%s), (%s))
+    """
+    
+    cur.execute(query, (
+        post_uuid,
+        # url_id,
+        data["space_id"],
+        data["user_id"],
+        data["description"],
+        data["date"]
+    ))
