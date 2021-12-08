@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS users (
     user_id UUID PRIMARY KEY NOT NULL,
     name varchar(256),
-    email varchar(256)
+    email varchar(256) UNIQUE
 );
 
 CREATE TABLE IF NOT EXISTS spaces (
