@@ -33,6 +33,6 @@ CREATE TABLE IF NOT EXISTS posts (
     link_id UUID REFERENCES links(link_id),
     space_id UUID NOT NULL REFERENCES spaces(space_id),
     user_id UUID NOT NULL REFERENCES users(user_id),
-    description varchar(512),
+    comment varchar(4096),
     date date
 );

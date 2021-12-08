@@ -36,7 +36,7 @@ def main():
                 random_hn_link = random.choice(hacker_news_data)
                 post_data = {
                     "link": random_hn_link["link"],
-                    "description": random_hn_link["description"],
+                    "comment": random_hn_link["description"],
                     "date": date,
                     "space_id": space_and_owner[0],
                     "user_id": space_and_owner[1],

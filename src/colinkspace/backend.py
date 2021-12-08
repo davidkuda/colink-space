@@ -110,7 +110,7 @@ def write_new_post(data: dict):
         link_id,
         space_id,
         user_id,
-        description,
+        comment,
         date
     )
     VALUES ((%s), (%s), (%s), (%s), (%s), (%s))
@@ -121,7 +121,7 @@ def write_new_post(data: dict):
         link_uuid,
         data["space_id"],
         data["user_id"],
-        data["description"],
+        data["comment"],
         data["date"]
     ))
     
