@@ -11,8 +11,15 @@ from hacker_news_scraper.hacker_news_scraper import HackerNewsScraper
 
 def main():
     # settings:
-    number_of_random_users = 10
-    days = 3
+
+    # low scale
+    # number_of_random_users = 10
+    # days = 3
+    # posts_per_user = 3
+
+    # 1'000'000 scale
+    number_of_random_users = 1000
+    days = 365
     posts_per_user = 3
 
     pg = PostgresConnection()
