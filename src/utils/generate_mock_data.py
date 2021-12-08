@@ -76,6 +76,15 @@ def write_app_data_files(iterations: int) -> None:
         with open(file_path, "w") as new_json_file:
             new_json_file.write(data_as_json_str)
 
+def write_random_link_per_user(days: int = 10, num_of_links: int = 5):
+    users = read_lines_of_file("data/users.csv")
+    hn_links = read_lines_of_file("data/hacker_news_links.csv")
+    for user in users:
+        pass
+
+def split_user_csv_line(user_line: str):
+    """Split a line from "users.csv" and returns a dict with."""
+    user_line.split(",")
 
 def create_app_links_data() -> dict:
     """Generate sample links that will be written to the app database."""
@@ -89,16 +98,19 @@ def create_app_links_data() -> dict:
     return data
 
 
-def get_random_user_id():
-    users = read_lines_of_file(PATH_USERS_CSV)
+def get_random_user_id(users: list = None):
+    """Choose a random user and return its id."""
+    if users is None:
+        users = read_lines_of_file(PATH_USERS_CSV)
     random_user = random.choice(users)
     id = random_user.split(",")[0]
     return id
 
 
-def get_random_hn_link():
+def get_random_hn_link(hn_links: list = None):
     """Get a random link from the hackernews links csv."""
-    hn_links = read_lines_of_file(PATH_HN_LINKS_CSV)
+    if hn_links is None:
+        hn_links = read_lines_of_file(PATH_HN_LINKS_CSV)
     line = random.choice(hn_links).split(",")
     date = line[0]
     link = line[1]
@@ -109,7 +121,7 @@ def get_random_hn_link():
 def read_lines_of_file(path: str):
     """Opens a file and returns all lines as list."""
     with open(path, "r") as file:
-        lines = file.readlines()
+        lines = [line.strip() for line in file.readlines()]
     return lines
 
 
