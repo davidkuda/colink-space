@@ -3,6 +3,7 @@ import random
 
 from colinkspace.postgres_connection import PostgresConnection
 from colinkspace.backend import write_new_users, write_new_post
+from colinkspace.data_quality_checker import DataQualityChecker
 from utils.generate_mock_data import generate_random_users
 from hacker_news_scraper.hacker_news_scraper import HackerNewsScraper
 
@@ -19,6 +20,7 @@ def main():
     users = read_users_from_csv()
 
     write_new_users(users)
+    DataQualityChecker.check_users_exist()
 
     spaces_and_owners = pg.execute_sql("SELECT space_id, user_id FROM space_owners;")
 
@@ -40,8 +42,7 @@ def main():
                 }
                 write_new_post(post_data)
 
-    # join and see which user has most shares
-    # join and see which links was shared most
+    DataQualityChecker.check_posts_of_user()
 
 
 def read_users_from_csv():
