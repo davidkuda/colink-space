@@ -1,9 +1,8 @@
 import datetime
 import random
-from pprint import pprint
 
 from colinkspace.postgres_connection import PostgresConnection
-from colinkspace.backend import write_new_users
+from colinkspace.backend import write_new_users, write_new_post
 from utils.generate_mock_data import generate_random_users
 from hacker_news_scraper.hacker_news_scraper import HackerNewsScraper
 
@@ -15,7 +14,7 @@ def main():
     users = read_users_from_csv()
     write_new_users(users)
 
-    spaces_and_owners = pg.execute_sql("SELECT * FROM space_owners;")
+    spaces_and_owners = pg.execute_sql("SELECT space_id, user_id FROM space_owners;")
 
     days = 3
     posts_per_user = 3
@@ -36,7 +35,7 @@ def main():
                     "space_id": space_and_owner[0],
                     "user_id": space_and_owner[1],
                 }
-                pprint(post_data)
+                write_new_post(post_data)
 
     # join and see which user has most shares
     # join and see which links was shared most
