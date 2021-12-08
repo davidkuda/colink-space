@@ -1,6 +1,6 @@
 from typing import List
 
-from linkpreview import link_preview
+from webpreview import web_preview
 
 from . import postgres_connection
 from utils.utils import create_random_uuid
@@ -27,9 +27,7 @@ def write_new_users(data: List[dict]) -> None:
     for user in data:
         
         # First check if email exists already
-        table = "users"
-        value = user["name"]
-        query = f"SELECT exists (SELECT 1 FROM {table} WHERE name = '{value}' LIMIT 1);"    
+        query = f"SELECT exists (SELECT 1 FROM users WHERE name = '{user['name']}' LIMIT 1);"    
         cur.execute(query)
         user_exists = cur.fetchone()[0]
         if user_exists:
@@ -47,7 +45,7 @@ def write_new_users(data: List[dict]) -> None:
         # Create a new default space for user
         space_uuid = create_random_uuid()
         query = """
-        INSERT INTO users (user_id, name, email)
+        INSERT INTO spaces (space_id, space_name, creation_date)
         VALUES ((%s), (%s), (%s));
         """
         cur.execute(query, (space_uuid, f'{user["name"]}\'s Personal Space', "2021-12-05"))
@@ -81,7 +79,7 @@ def write_new_post(data: dict):
 
     # check if link is already in db
     link = data["link"]
-    query = f"SELECT link_id FROM links WHERE url = '{data['link']}';"
+    query = f"SELECT link_id FROM links WHERE url = '{link}';"
     cur.execute(query)
     
     link_uuid = cur.fetchone()
@@ -89,15 +87,18 @@ def write_new_post(data: dict):
     if link_uuid is None:
         link_uuid = create_random_uuid()
         # parse link
-        preview = link_preview(link)
+        try:
+            title, description, image = web_preview(link)
+        except:
+            title, description, image = 3 * [None]
+            
 
         # write link
         query = f"""
         INSERT INTO links 
         (link_id, url, title, description, image_url)
         VALUES ((%s), (%s), (%s), (%s), (%s))"""
-        cur.execute(query, (link_uuid, link, preview.title, 
-                            preview.description, preview.image))
+        cur.execute(query, (link_uuid, link, title, description, image))
     
     # Write post
     post_uuid = create_random_uuid()
@@ -122,3 +123,5 @@ def write_new_post(data: dict):
         data["description"],
         data["date"]
     ))
+    
+    pg.conn.commit()
