@@ -78,7 +78,7 @@ Whenever a user opens his space, the frontend will fetch the data from the backe
 ### Origin of the data
 
 - Users are created randomly from a list of first names and a list of last names
-- Links are retrieved from Hacker News (https://news.ycombinator.com/)
+- Links are retrieved from Hacker News (https://news.ycombinator.com/) (web scraped)
 - Meta Information on links are enriched / parsed with webpreview (https://github.com/ludbek/webpreview)
 
 ## Scaling Scenarios
