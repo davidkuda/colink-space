@@ -1,5 +1,7 @@
 from typing import List
 
+from linkpreview import link_preview
+
 from . import postgres_connection
 from utils.utils import create_random_uuid
 
@@ -77,9 +79,25 @@ def write_new_post(data: dict):
     pg = postgres_connection.PostgresConnection()
     cur = pg.conn.cursor()
 
-    # parse link
+    # check if link is already in db
+    link = data["link"]
+    query = f"SELECT link_id FROM links WHERE url = {data['link']};"
+    cur.execute(query)
     
-    # write link
+    link_uuid = cur.fetchone()
+    
+    if link_uuid is None:
+        link_uuid = create_random_uuid()
+        # parse link
+        preview = link_preview(link)
+
+        # write link
+        query = f"""
+        INSERT INTO links 
+        (url_id, url, title, description, image_url)
+        VALUES ((%s), (%s), (%s), (%s), (%s))"""
+        cur.execute(query, (link_uuid, link, preview.title, 
+                            preview.description, preview.image))
     
     # Write post
     post_uuid = create_random_uuid()
@@ -98,7 +116,7 @@ def write_new_post(data: dict):
     
     cur.execute(query, (
         post_uuid,
-        # url_id,
+        link_uuid,
         data["space_id"],
         data["user_id"],
         data["description"],
