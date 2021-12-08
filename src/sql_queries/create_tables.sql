@@ -23,9 +23,9 @@ CREATE TABLE IF NOT EXISTS space_contributors (
 CREATE TABLE IF NOT EXISTS links (
     link_id UUID NOT NULL PRIMARY KEY,
     url varchar(512) NOT NULL UNIQUE,
-    title varchar(256),
-    description varchar(256),
-    image_url varchar(256)
+    title varchar(1024),
+    description varchar(1024),
+    image_url varchar(1024)
 );
 
 CREATE TABLE IF NOT EXISTS posts (
