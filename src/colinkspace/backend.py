@@ -97,7 +97,8 @@ def write_new_post(data: dict):
         query = f"""
         INSERT INTO links 
         (link_id, url, title, description, image_url)
-        VALUES ((%s), (%s), (%s), (%s), (%s))"""
+        VALUES ((%s), (%s), (%s), (%s), (%s))
+        ON CONFLICT DO NOTHING"""
         cur.execute(query, (link_uuid, link, title, description, image))
     
     # Write post
