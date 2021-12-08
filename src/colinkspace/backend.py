@@ -81,7 +81,7 @@ def write_new_post(data: dict):
 
     # check if link is already in db
     link = data["link"]
-    query = f"SELECT link_id FROM links WHERE url = {data['link']};"
+    query = f"SELECT link_id FROM links WHERE url = '{data['link']}';"
     cur.execute(query)
     
     link_uuid = cur.fetchone()
@@ -94,7 +94,7 @@ def write_new_post(data: dict):
         # write link
         query = f"""
         INSERT INTO links 
-        (url_id, url, title, description, image_url)
+        (link_id, url, title, description, image_url)
         VALUES ((%s), (%s), (%s), (%s), (%s))"""
         cur.execute(query, (link_uuid, link, preview.title, 
                             preview.description, preview.image))
@@ -104,11 +104,11 @@ def write_new_post(data: dict):
 
     query = """
     INSERT INTO posts (
-        post_id
-        url_id
-        space_id
-        user_id
-        description
+        post_id,
+        link_id,
+        space_id,
+        user_id,
+        description,
         date
     )
     VALUES ((%s), (%s), (%s), (%s), (%s), (%s))

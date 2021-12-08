@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS space_contributors (
 );
 
 CREATE TABLE IF NOT EXISTS links (
-    url_id UUID NOT NULL PRIMARY KEY,
+    link_id UUID NOT NULL PRIMARY KEY,
     url varchar(512) NOT NULL UNIQUE,
     title varchar(256),
     description varchar(256),
@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS links (
 
 CREATE TABLE IF NOT EXISTS posts (
     post_id UUID NOT NULL PRIMARY KEY,
-    url_id UUID REFERENCES links(url_id),
+    link_id UUID REFERENCES links(link_id),
     space_id UUID NOT NULL REFERENCES spaces(space_id),
     user_id UUID NOT NULL REFERENCES users(user_id),
     description varchar(512),
