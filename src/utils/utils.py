@@ -21,6 +21,17 @@ def create_random_uuid() -> str:
     return str(uuid.uuid4())
 
 
+def read_users_from_csv():
+    PATH_USERS_CSV = "data/users.csv"
+    users = []
+    with open(PATH_USERS_CSV, "r") as file:
+        headers = file.readline()
+        for line in file:
+            name, email = line.strip().split(",")
+            users.append({"name": name, "email": email})
+    return users
+
+
 if __name__ == "__main__":
     config = parse_config_file()
     print(config)

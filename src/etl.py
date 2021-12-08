@@ -5,6 +5,7 @@ from colinkspace.postgres_connection import PostgresConnection
 from colinkspace.backend import write_new_users, write_new_post
 from colinkspace.data_quality_checker import DataQualityChecker
 from utils.generate_mock_data import generate_random_users
+from utils.utils import read_users_from_csv
 from hacker_news_scraper.hacker_news_scraper import HackerNewsScraper
 
 
@@ -43,17 +44,6 @@ def main():
                 write_new_post(post_data)
 
     DataQualityChecker.check_posts_of_user()
-
-
-def read_users_from_csv():
-    PATH_USERS_CSV = "data/users.csv"
-    users = []
-    with open(PATH_USERS_CSV, "r") as file:
-        headers = file.readline()
-        for line in file:
-            name, email = line.strip().split(",")
-            users.append({"name": name, "email": email})
-    return users
 
 
 if __name__ == "__main__":
