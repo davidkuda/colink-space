@@ -8,16 +8,19 @@ from hacker_news_scraper.hacker_news_scraper import HackerNewsScraper
 
 
 def main():
+    # settings:
+    number_of_random_users = 10
+    days = 3
+    posts_per_user = 3
+
     pg = PostgresConnection()
-    generate_random_users(10)
+    generate_random_users(number_of_random_users)
     pg.init_tables()
     users = read_users_from_csv()
+
     write_new_users(users)
 
     spaces_and_owners = pg.execute_sql("SELECT space_id, user_id FROM space_owners;")
-
-    days = 3
-    posts_per_user = 3
 
     for day in reversed(range(days)):
         today = datetime.date.today()
