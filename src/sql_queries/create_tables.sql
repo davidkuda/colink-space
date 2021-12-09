@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS links (
     link_id UUID NOT NULL PRIMARY KEY,
     url varchar(512) NOT NULL UNIQUE,
     title varchar(1024),
-    description varchar(2048),
+    description varchar(4096),
     image_url varchar(1024)
 );
 
