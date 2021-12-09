@@ -19,8 +19,8 @@ def main():
 
     # 1'000'000 scale
     number_of_random_users = 100
-    days = 100
-    posts_per_user = 10
+    days = 10
+    posts_per_user = 7
 
     pg = PostgresConnection()
     generate_random_users(number_of_random_users)
@@ -41,9 +41,17 @@ def main():
 
         for space_and_owner in spaces_and_owners:
             print(f'Insert data from user "{space_and_owner[1]}"')
+            unique_links = []
             for i in range(posts_per_user):
                 random_hn_link = random.choices(
                     hacker_news_data.links, hacker_news_data.get_weights())[0]
+                while random_hn_link["link"] in unique_links:
+                    print("Link already exists, getting new one")
+                    random_hn_link = random.choices(
+                        hacker_news_data.links, hacker_news_data.get_weights())[0]
+                unique_links.append(random_hn_link["link"])
+                    
+                pg.execute_sql("SELECT")
                 post_data = {
                     "link": random_hn_link["link"],
                     "comment": random_hn_link["description"],
