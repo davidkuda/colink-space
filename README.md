@@ -191,18 +191,6 @@ To update this environment with your production dependencies run:
 
 You can now import functions and classes from the module with `import colinkspace`.
 
-### Testing
-
-We use `pytest` as test framework. To execute the tests, please run
-
-    python setup.py test
-
-To run the tests with coverage information, please use
-
-    python setup.py testcov
-
-and have a look at the `htmlcov` folder, after the tests are done.
-
 ### Notebooks
 
 To use your module code (`src/`) in Jupyter notebooks (`notebooks/`) without running into import errors, make sure to install the source locally
@@ -218,14 +206,6 @@ Assuming you already have Jupyter installed, you can make your virtual environme
 
 Note that we mainly use notebooks for experiments, visualizations and reports. Every piece of functionality that is meant to be reused should go into module code
 and be imported into notebooks.
-
-### Distribution Package
-
-To build a distribution package (wheel), please use
-
-    python setup.py dist
-
-this will clean up the build folder and then run the `bdist_wheel` command.
 
 ### Contributions
 
