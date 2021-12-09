@@ -54,6 +54,9 @@ class HackerNewsScraper:
             link = link_element.get("href")
             description = link_element.string
             score = int(scores[i].string.split()[0])
+
+            if link.starts.startswith("item?id"):
+                link = "https://news.ycombinator.com/" + link
             
             data = {
                 "link": link,
