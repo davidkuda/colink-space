@@ -139,4 +139,16 @@ def get_sample_posts_of_space():
         LIMIT 10;
         """
     )
-    return posts
+
+    mapped_posts = []
+    for post in posts:
+        mapped_posts.append({
+            "comment": post[0],
+            "url": post[1],
+            "title": post[2],
+            "description": post[3],
+            "image_url": post[4],
+            "date": str(post[5])
+        })
+    
+    return mapped_posts
