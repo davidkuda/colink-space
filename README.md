@@ -13,16 +13,6 @@ This repository is a POC / Proof of Concept of the underlying data model. I run 
 1. Test the data model with an upload of 1'000'000 records. The data will be generated randomly from sample data.
 2. Get all posts listed under a space (after the upload)
 
-## The data Model
-
-Once a user signs up he has a basic space. A user can add posts to that space. A post contains a link, a description, tags and mentions (similar to a tweet on Twitter). A user can create multiple spaces. For example, he could use one space for himself, create a separate space to share links with his colleagues and another one to share parenting stuff with his wife.
-
-This means that for this project I have used a normalized, relational data model.
-
-I am using a postgres database (single node, not distributed). This can well handle 1'000'000 records, but it would make sense to change to a distributed system if there was growth.
-
-![CoLinkSpace Data Model](https://github.com/davidkuda/media/blob/main/CoLinkSpace/data-models/colinkspace_overview.png)
-
 ## The Schema
 
 ### Overview
@@ -81,6 +71,90 @@ Whenever a user opens his space, the frontend will fetch the data from the backe
 - Links are retrieved from Hacker News (https://news.ycombinator.com/) (web scraped)
 - Meta Information on links are enriched / parsed with webpreview (https://github.com/ludbek/webpreview)
 
+
+## The data Model
+
+Once a user signs up he has a basic space. A user can add posts to that space. A post contains a link, a description, tags and mentions (similar to a tweet on Twitter). A user can create multiple spaces. For example, he could use one space for himself, create a separate space to share links with his colleagues and another one to share parenting stuff with his wife.
+
+This means that for this project I have used a normalized, relational data model.
+
+I am using a postgres database (single node, not distributed). This can well handle 1'000'000 records, but it would make sense to change to a distributed system if there was growth.
+
+![CoLinkSpace Data Model](https://github.com/davidkuda/media/blob/main/CoLinkSpace/data-models/colinkspace_overview.png)
+
+### Using the Data Model
+
+The Data Model is useful in two ways:
+
+1. It provides data to the frontend -> Enables the frontend to fetch content
+2. It enables analytics
+
+### Enabling Frontend to fetch app data
+
+A frontend could make a request to the backend and ask for content. An example could be:
+
+`curl backend.colink.space/posts?space=space_id`
+
+The backend would query the database by joining the post table with the link table:
+
+```sql
+SELECT comment, url, title, links.description, image_url, date
+FROM posts
+JOIN links ON posts.link_id = links.link_id
+WHERE space_id = 'space_id';
+```
+
+The backend would probably send the data with pagination. Ten sample links might look like this:
+
+```json
+{
+  "data": [
+    {
+      "comment": "Workers quit jobs in droves to become their own bosses",
+      "url": "https://www.wsj.com/articles/workers-quit-jobs-in-droves-to-become-their-own-bosses-11638199199",
+      "title": "Page Not Found",
+      "description": "We can’t find the page you are looking for.",
+      "image_url": "https://s.wsj.net/img/meta/wsj-social-share.png",
+      "date": "2021-11-30"
+    },
+    ...
+  ]
+}
+```
+
+The frontend would take this data and render it as cards in the space.
+
+### Enable Analytics
+
+The data model would enable to make queries to learn more about the usage of the app. You could for instance find out which link was posted the most or who is the user that is most active.
+
+In that case, we could even form a star schema around the `posts` table. The `posts` table would be the facts table and all tables that are referenced with their respective foreign keys would be the dimension tables.
+
+A sample query could be:
+
+```sql
+SELECT COUNT(posts.link_id) as count, url, title
+FROM posts
+JOIN links ON posts.link_id = links.link_id
+GROUP BY links.link_id
+ORDER BY count DESC
+LIMIT 10;
+```
+
+And here you would find out that these links were shared most:
+
+count	url	title
+78	item?id=29387264	None
+71	https://apenwarr.ca/log/20211201	100 years of whatever this will be
+64	https://tutanota.com/blog/posts/germany-right-to-encryption/	Germany: New government plans 'right to encryption'.
+54	https://googleprojectzero.blogspot.com/2021/12/this-shouldnt-have-happened.html	This shouldn't have happened: A vulnerability postmortem
+51	https://www.ftc.gov/news-events/press-releases/2021/12/ftc-sues-block-40-billion-semiconductor-chip-merger	FTC Sues to Block $40 Billion Semiconductor Chip Merger
+51	https://www.reuters.com/technology/exclusive-us-state-department-phones-hacked-with-israeli-company-spyware-sources-2021-12-03/	U.S. State Department phones hacked with Israeli company spyware - sources
+51	https://www.blender.org/download/releases/3-0/	  3.0 — blender.org
+50	https://sprocketfox.io/xssfox/2021/12/02/xrandr/	Ideal monitor rotation for programmers
+49	https://www.youtube.com/watch?v=43wp_EUk2ho	YouTube is Auto-Deleting 100% of my Comments @YouTube #YouTube
+47	https://oxide.computer/blog/hubris-and-humility	Hubris and Humility / Oxide
+
 ## Scaling Scenarios
 
 ### What if there were 100'000'000 rows of data?
@@ -92,7 +166,7 @@ Right now I am using a single Postgres instance. Postgres would not be an approp
 If I wanted to deploy data science models such as recommender systems I would definately create a data lake model where the app can use the data as well as the analytics. For the analytics part I would use Spark with a pipeline orchestrator such as prefect (https://www.prefect.io). 
 
 ### What if there were hundreds of requests simultaniously every second?
-As in the reply above, in order to be able to process so many requests I would deploy a distributed database. Then I would definately use the cloud because scaling is built in. In Addition to a technology such as Kafka I would also need to deploy Caching and CDN. It would probably make sense to prepare the backend in a container and make it available with Kubernetes. I would choose Go as the programming language since Go is very powerful in handling a lot of requests.
+As in the reply above, in order to be able to process so many requests I would deploy a distributed database. Then I would definately use the cloud because scaling is built in. In Addition to a technology such as Kafka I would also need to deploy Load Balancing, Caching and CDN. It would probably make sense to prepare the backend in a container and make it available with Kubernetes. I would choose Go as the programming language since Go is very powerful in handling a lot of requests.
 
 ## Files in the repository
 
