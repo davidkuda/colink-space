@@ -138,22 +138,17 @@ FROM posts
 JOIN links ON posts.link_id = links.link_id
 GROUP BY links.link_id
 ORDER BY count DESC
-LIMIT 10;
+LIMIT 3;
 ```
 
 And here you would find out that these links were shared most:
 
-count	url	title
-78	item?id=29387264	None
-71	https://apenwarr.ca/log/20211201	100 years of whatever this will be
-64	https://tutanota.com/blog/posts/germany-right-to-encryption/	Germany: New government plans 'right to encryption'.
-54	https://googleprojectzero.blogspot.com/2021/12/this-shouldnt-have-happened.html	This shouldn't have happened: A vulnerability postmortem
-51	https://www.ftc.gov/news-events/press-releases/2021/12/ftc-sues-block-40-billion-semiconductor-chip-merger	FTC Sues to Block $40 Billion Semiconductor Chip Merger
-51	https://www.reuters.com/technology/exclusive-us-state-department-phones-hacked-with-israeli-company-spyware-sources-2021-12-03/	U.S. State Department phones hacked with Israeli company spyware - sources
-51	https://www.blender.org/download/releases/3-0/	  3.0 — blender.org
-50	https://sprocketfox.io/xssfox/2021/12/02/xrandr/	Ideal monitor rotation for programmers
-49	https://www.youtube.com/watch?v=43wp_EUk2ho	YouTube is Auto-Deleting 100% of my Comments @YouTube #YouTube
-47	https://oxide.computer/blog/hubris-and-humility	Hubris and Humility / Oxide
+|count|url|title|
+|-----|---|-----|
+|71|https://apenwarr.ca/log/20211201|100 years of whatever this will be|
+|64|https://tutanota.com/blog/posts/germany-right-to-encryption/|Germany: New government plans 'right to encryption'.|
+|54|https://googleprojectzero.blogspot.com/2021/12/this-shouldnt-have-happened.html|This shouldn't have happened: A vulnerability postmortem|
+
 
 ## Scaling Scenarios
 
