@@ -65,6 +65,10 @@ class HackerNewsScraper:
             links.append(data)
         
         return links
+    
+    def get_weights(self):
+        scores = [e["score"] for e in self.links]
+        return tuple(scores)
 
     def _get_date(self) -> str:
         """The date is the first word in the title."""

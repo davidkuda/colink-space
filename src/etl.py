@@ -37,12 +37,13 @@ def main():
         delta = datetime.timedelta(day)
         date = today - delta
         print(f"Inserts from {str(date)}")
-        hacker_news_data = HackerNewsScraper(date).links
+        hacker_news_data = HackerNewsScraper(date)
 
         for space_and_owner in spaces_and_owners:
             print(f'Insert data from user "{space_and_owner[1]}"')
             for i in range(posts_per_user):
-                random_hn_link = random.choice(hacker_news_data)
+                random_hn_link = random.choices(
+                    hacker_news_data.links, hacker_news_data.get_weights())[0]
                 post_data = {
                     "link": random_hn_link["link"],
                     "comment": random_hn_link["description"],
