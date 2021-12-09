@@ -18,9 +18,9 @@ def main():
     # posts_per_user = 3
 
     # 1'000'000 scale
-    number_of_random_users = 1000
-    days = 365
-    posts_per_user = 3
+    number_of_random_users = 100
+    days = 100
+    posts_per_user = 10
 
     pg = PostgresConnection()
     generate_random_users(number_of_random_users)
@@ -36,9 +36,11 @@ def main():
         today = datetime.date.today()
         delta = datetime.timedelta(day)
         date = today - delta
+        print(f"Inserts from {str(date)}")
         hacker_news_data = HackerNewsScraper(date).links
 
         for space_and_owner in spaces_and_owners:
+            print(f'Insert data from user "{space_and_owner[1]}"')
             for i in range(posts_per_user):
                 random_hn_link = random.choice(hacker_news_data)
                 post_data = {
