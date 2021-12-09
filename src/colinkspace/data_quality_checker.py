@@ -30,7 +30,7 @@ class DataQualityChecker:
         space_id = pg.execute_sql("SELECT space_id FROM spaces LIMIT 1;")[0][0]
         posts = pg.execute_sql(
             f"""
-            SELECT posts.description, url, title, links.description, image_url, date
+            SELECT comment, url, title, links.description, image_url, date
             FROM posts
             JOIN links ON posts.link_id = links.link_id
             WHERE space_id = '{space_id}'
